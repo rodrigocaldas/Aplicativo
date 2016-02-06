@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ public class Inicial extends AppCompatActivity {
                 startActivity(intentFormulario);
             }
         });
+        registerForContextMenu(listaLivros);
     }
 
     @Override
@@ -83,6 +85,28 @@ public class Inicial extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
+
+        MenuItem deletar = menu.add("Apagar livro");
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+                Livro livroClicado = (Livro) listaLivros.getItemAtPosition(info.position);
+
+                LivroDAO dao = new LivroDAO(Inicial.this);
+                dao.apagarLivro(livroClicado);
+                dao.close();
+
+                carregaLista();
+                return false;
+            }
+        });
+
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     public void acao_inicial(View view){
