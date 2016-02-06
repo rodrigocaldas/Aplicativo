@@ -19,7 +19,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_menu_edit"
-        android:tint="@color/colorButton"
         android:onClick="acao_inicial" />
 
 </RelativeLayout>

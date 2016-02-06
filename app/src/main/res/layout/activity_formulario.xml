@@ -15,37 +15,49 @@
             android:id="@+id/formulario_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Título"/>
+            android:hint="Título"
+            android:inputType="textCapWords"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_saga"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Saga"/>
+            android:hint="Saga"
+            android:inputType="textCapWords"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_volume_saga"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Volume da saga"/>
+            android:hint="Volume da saga"
+            android:inputType="number"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_autor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Autor"/>
+            android:hint="Autor"
+            android:inputType="textCapWords"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_tipo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tipo"/>
+            android:hint="Tipo"
+            android:inputType="textCapSentences"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_categoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Categoria"/>
+            android:hint="Categoria"
+            android:inputType="textCapSentences"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_data_inicio"
@@ -53,13 +65,16 @@
             android:layout_height="wrap_content"
             android:hint="Data do Inicio"
             android:ems="12"
-            android:inputType="date"/>
+            android:inputType="date"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_pagina"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Página/tempo atual"/>
+            android:hint="Página/tempo atual"
+            android:inputType="number"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_data_fim"
@@ -67,30 +82,24 @@
             android:layout_height="wrap_content"
             android:hint="Data do Fim"
             android:ems="12"
-            android:inputType="date"/>
+            android:inputType="date"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_isbn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ISBN"/>
+            android:hint="ISBN"
+            android:inputType="number"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/formulario_nota_pessoal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Notas Pessoais"
+            android:inputType="textMultiLine"
             android:lines="8"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/formulario_botao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/sym_keyboard_ok"
-            android:onClick="acao_formulario"/>
-
 
     </LinearLayout>
 </ScrollView>

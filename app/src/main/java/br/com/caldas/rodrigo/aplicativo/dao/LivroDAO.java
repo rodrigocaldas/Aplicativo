@@ -67,7 +67,7 @@ public class LivroDAO extends SQLiteOpenHelper {
         db.update("Livros", dados, "id == ?", params);
     }
 
-    public void apagarAluno(Livro livro) {
+    public void apagarLivro(Livro livro) {
         SQLiteDatabase db = getWritableDatabase();
         String[] params = {String.valueOf(livro.getId())};
         db.delete("Livros", "id = ?", params);
