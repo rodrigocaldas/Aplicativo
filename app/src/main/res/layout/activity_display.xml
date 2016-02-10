@@ -5,8 +5,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ListView
+        android:id="@+id/lista_livros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/inicial_botao_add"
+        android:id="@+id/display_botao_add"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
@@ -14,6 +19,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_menu_edit"
-        android:onClick="acao_inicial" />
+        android:onClick="acao_display" />
 
 </RelativeLayout>

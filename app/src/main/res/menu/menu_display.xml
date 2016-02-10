@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/display_alfabeto"
+        android:title="Ordem alfabética"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/display_inicio"
+        android:title="Data de inicio da leitura"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/display_final"
+        android:title="Data de término da leitura"
+        app:showAsAction="never"/>
+
+</menu>

@@ -1,11 +1,17 @@
 package br.com.caldas.rodrigo.aplicativo;
 
+import android.app.DatePickerDialog;
+import android.view.View;
 import android.widget.EditText;
+
+import java.util.Calendar;
+
 import br.com.caldas.rodrigo.aplicativo.modelo.Livro;
 
 /**
  * Created by rodrigo on 31/01/16.
  */
+/*Classe responsável por auxiliar no manejo do Formulario.*/
 public class FormularioHelper {
     private EditText titulo;
     private EditText saga;
@@ -36,6 +42,7 @@ public class FormularioHelper {
         livro = new Livro();
     }
 
+    /*Responsável por setar os dados do Livro com as informações passadas nos EditText*/
     public Livro pegaLivro(){
         livro.setTitulo(titulo.getText().toString());
         livro.setSaga(saga.getText().toString());
@@ -52,6 +59,7 @@ public class FormularioHelper {
         return livro;
     }
 
+    /*Responsável por pegar os dados do Livro e preencher o formulario com eles.*/
     public void preencheFormulario(Livro livro){
         titulo.setText(livro.getTitulo());
         saga.setText(livro.getSaga());

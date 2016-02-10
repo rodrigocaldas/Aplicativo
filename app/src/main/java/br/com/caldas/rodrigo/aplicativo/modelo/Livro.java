@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by rodrigo on 31/01/16.
  */
+/*Classe responsável por representar um Livro e seus atributos.*/
 public class Livro implements Serializable{
     private long id;
     private String titulo;
@@ -67,8 +68,16 @@ public class Livro implements Serializable{
 
     public void setNotas_pessoais(String notas_pessoais) {this.notas_pessoais = notas_pessoais;}
 
+    /*Sobrescrita do método toString, responsável por "traduzir" o objeto em String.*/
     @Override
     public String toString() {
-        return getTitulo();
+        String retorno;
+        //Verifica se o Livro pertence a alguma saga.
+        if (!getSaga().equals("")){
+            retorno = getSaga() +" - "+ getTitulo();
+        }else{
+            retorno = getTitulo();
+        }
+        return retorno;
     }
 }

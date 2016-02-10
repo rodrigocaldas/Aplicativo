@@ -5,20 +5,21 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.caldas.rodrigo.aplicativo.modelo.Livro;
 
 /**
  * Created by rodrigo on 06/02/16.
  */
+/*Classe responsável pela criação e acesso ao BD.*/
 public class LivroDAO extends SQLiteOpenHelper {
+
     public LivroDAO(Context context) {
         super(context, "Acervo", null, 1);
     }
 
+    /*Responsável por criar o BD.*/
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE Livros (id INTEGER PRIMARY KEY, titulo TEXT NOT NULL, saga TEXT, " +
@@ -27,6 +28,7 @@ public class LivroDAO extends SQLiteOpenHelper {
         db.execSQL(sql);
     }
 
+    /*Responsável pela atualização do BD.*/
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String sql = "DROP TABLE IF EXISTS Livros;";
@@ -34,6 +36,7 @@ public class LivroDAO extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /*Responsável por pegar todos os dados de um Livro e colocá-los em um ContentValues que será retornado.*/
     private ContentValues pegaDadosLivro(Livro livro) {
         ContentValues dados = new ContentValues();
         dados.put("titulo", livro.getTitulo());
@@ -51,6 +54,7 @@ public class LivroDAO extends SQLiteOpenHelper {
         return dados;
     }
 
+    /*Responsável pela inserção de um Livro no BD, recebe um Livro e retorna nada.*/
     public void insere(Livro livro){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -59,6 +63,8 @@ public class LivroDAO extends SQLiteOpenHelper {
         db.insert("Livros", null, dados);
     }
 
+    /*Responsável por alterar os dados de um Livro no BD, recebe um Livro e usa seu ID para realizar
+    * esta ação.*/
     public void altera(Livro livro){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -67,15 +73,17 @@ public class LivroDAO extends SQLiteOpenHelper {
         db.update("Livros", dados, "id == ?", params);
     }
 
+    /*Responsável por excluir um Livro no BD, recebe um Livro e usa sei ID para realizar esta ação.*/
     public void apagarLivro(Livro livro) {
         SQLiteDatabase db = getWritableDatabase();
         String[] params = {String.valueOf(livro.getId())};
         db.delete("Livros", "id = ?", params);
     }
 
-
-    public List<Livro> buscaLivros() {
-        String sql = "SELECT * FROM Livros;";
+    /*Responsável por recuperar no BD todos os exemplares ordenados pela saga depois pelo volume e
+    * por último pelo título, recebe nada e retorna uma lista de Livros.*/
+    public List<Livro> buscaTodosLivros() {
+        String sql = "SELECT * FROM Livros ORDER BY saga, volume, titulo";
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(sql, null);
         List<Livro> livros = new ArrayList<Livro>();
