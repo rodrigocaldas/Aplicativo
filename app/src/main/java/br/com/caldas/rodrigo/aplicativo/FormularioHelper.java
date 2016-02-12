@@ -17,7 +17,6 @@ public class FormularioHelper {
     private EditText saga;
     private EditText volume;
     private EditText autor;
-    private EditText tipo;
     private EditText categoria;
     private EditText data_inicio;
     private EditText progresso;
@@ -31,7 +30,6 @@ public class FormularioHelper {
         this.saga = (EditText) activity.findViewById(R.id.formulario_saga);
         this.volume = (EditText) activity.findViewById(R.id.formulario_volume_saga);
         this.autor = (EditText) activity.findViewById(R.id.formulario_autor);
-        this.tipo = (EditText) activity.findViewById(R.id.formulario_tipo);
         this.categoria = (EditText) activity.findViewById(R.id.formulario_categoria);
         this.data_inicio = (EditText) activity.findViewById(R.id.formulario_data_inicio);
         this.progresso = (EditText) activity.findViewById(R.id.formulario_pagina);
@@ -48,7 +46,6 @@ public class FormularioHelper {
         livro.setSaga(saga.getText().toString());
         livro.setVolume(volume.getText().toString());
         livro.setAutor(autor.getText().toString());
-        livro.setTipo(tipo.getText().toString());
         livro.setCategoria(categoria.getText().toString());
         livro.setData_inicio(data_inicio.getText().toString());
         livro.setProgresso(progresso.getText().toString());
@@ -65,7 +62,6 @@ public class FormularioHelper {
         saga.setText(livro.getSaga());
         volume.setText(livro.getVolume());
         autor.setText(livro.getAutor());
-        tipo.setText(livro.getTipo());
         categoria.setText(livro.getCategoria());
         data_inicio.setText(livro.getData_inicio());
         progresso.setText(livro.getProgresso());

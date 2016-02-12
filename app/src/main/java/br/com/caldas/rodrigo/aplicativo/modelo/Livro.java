@@ -12,7 +12,6 @@ public class Livro implements Serializable{
     private String saga;
     private String volume;
     private String autor;
-    private String tipo;
     private String categoria;
     private String data_inicio;
     private String progresso;
@@ -39,10 +38,6 @@ public class Livro implements Serializable{
     public String getAutor() {return autor;}
 
     public void setAutor(String autor) {this.autor = autor;}
-
-    public String getTipo() {return tipo;}
-
-    public void setTipo(String tipo) {this.tipo = tipo;}
 
     public String getCategoria() {return categoria;}
 

@@ -2,6 +2,7 @@ package br.com.caldas.rodrigo.aplicativo.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -23,7 +24,7 @@ public class LivroDAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE Livros (id INTEGER PRIMARY KEY, titulo TEXT NOT NULL, saga TEXT, " +
-                "volume TEXT, autor TEXT, tipo TEXT, categoria TEXT, inicio TEXT, progresso TEXT," +
+                "volume TEXT, autor TEXT, categoria TEXT, inicio TEXT, progresso TEXT," +
                 "final TEXT, isbn TEXT, notas TEXT);";
         db.execSQL(sql);
     }
@@ -43,7 +44,6 @@ public class LivroDAO extends SQLiteOpenHelper {
         dados.put("saga", livro.getSaga());
         dados.put("volume", livro.getVolume());
         dados.put("autor", livro.getAutor());
-        dados.put("tipo", livro.getTipo());
         dados.put("categoria", livro.getCategoria());
         dados.put("inicio", livro.getData_inicio());
         dados.put("progresso", livro.getProgresso());
@@ -80,10 +80,25 @@ public class LivroDAO extends SQLiteOpenHelper {
         db.delete("Livros", "id = ?", params);
     }
 
-    /*Responsável por recuperar no BD todos os exemplares ordenados pela saga depois pelo volume e
-    * por último pelo título, recebe nada e retorna uma lista de Livros.*/
-    public List<Livro> buscaTodosLivros() {
-        String sql = "SELECT * FROM Livros ORDER BY saga, volume, titulo";
+    /*Responsável por recuperar no BD todos os exemplares ordenados pelo parametro passado pelo usuário,
+    * recebe nada e retorna uma lista de Livros.*/
+    public List<Livro> buscaTodosLivros(String parametro) {
+        String sql;
+        switch (parametro){
+            case "alfabeto":
+                sql = "SELECT * FROM Livros ORDER BY saga, volume, titulo";
+                break;
+            case "data_inicio":
+                sql = "SELECT * FROM Livros ORDER BY inicio, saga, volume, titulo";
+                break;
+            case "data_final":
+                sql = "SELECT * FROM Livros ORDER BY final, saga, volume, titulo";
+                break;
+            default:
+                sql = "SELECT * FROM Livros ORDER BY saga, volume, titulo";
+                break;
+        }
+
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(sql, null);
         List<Livro> livros = new ArrayList<Livro>();
@@ -95,7 +110,6 @@ public class LivroDAO extends SQLiteOpenHelper {
             livro.setSaga(c.getString(c.getColumnIndex("saga")));
             livro.setVolume(c.getString(c.getColumnIndex("volume")));
             livro.setAutor(c.getString(c.getColumnIndex("autor")));
-            livro.setTipo(c.getString(c.getColumnIndex("tipo")));
             livro.setCategoria(c.getString(c.getColumnIndex("categoria")));
             livro.setData_inicio(c.getString(c.getColumnIndex("inicio")));
             livro.setProgresso(c.getString(c.getColumnIndex("progresso")));

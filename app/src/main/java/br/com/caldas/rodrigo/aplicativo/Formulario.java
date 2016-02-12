@@ -10,9 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 import br.com.caldas.rodrigo.aplicativo.dao.LivroDAO;
 import br.com.caldas.rodrigo.aplicativo.modelo.Livro;
@@ -21,7 +25,7 @@ public class Formulario extends AppCompatActivity{
 
     private FormularioHelper helper;
     private String origem;
-    private EditText inicial, fim;
+    private EditText inicial, fim, anotacoes;
     private int dia, mes, ano;
 
     @Override
@@ -38,6 +42,31 @@ public class Formulario extends AppCompatActivity{
         //Se foi passado um livro, deve-se preencher o Formulario com os dados do Livro.
         if(livro != null){
             helper.preencheFormulario(livro);
+        }
+
+        fim = (EditText) findViewById(R.id.formulario_data_fim);
+        anotacoes = (EditText) findViewById(R.id.formulario_nota_pessoal);
+        if (!origem.equals("display_editar")){
+            fim.setVisibility(View.GONE);
+            anotacoes.setVisibility(View.GONE);
+        }else{
+            fim.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar calendario = Calendar.getInstance();
+                    dia = calendario.get(Calendar.DAY_OF_MONTH);
+                    mes = calendario.get(Calendar.MONTH);
+                    ano = calendario.get(Calendar.YEAR);
+                    DatePickerDialog fim_datePicker = new DatePickerDialog(Formulario.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            fim.setText(dayOfMonth + " / " + (monthOfYear+1) + " / " +year);
+                        }
+                    }, ano, mes, dia);
+                    fim_datePicker.setTitle("Data de término da leitura");
+                    fim_datePicker.show();
+                }
+            });
         }
 
         inicial = (EditText) findViewById(R.id.formulario_data_inicio);
@@ -58,26 +87,8 @@ public class Formulario extends AppCompatActivity{
                 inicial_datePicker.show();
             }
         });
-
-        fim = (EditText) findViewById(R.id.formulario_data_fim);
-        fim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendario = Calendar.getInstance();
-                dia = calendario.get(Calendar.DAY_OF_MONTH);
-                mes = calendario.get(Calendar.MONTH);
-                ano = calendario.get(Calendar.YEAR);
-                DatePickerDialog fim_datePicker = new DatePickerDialog(Formulario.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        fim.setText(dayOfMonth + " / " + (monthOfYear+1) + " / " +year);
-                    }
-                }, ano, mes, dia);
-                fim_datePicker.setTitle("Data de término da leitura");
-                fim_datePicker.show();
-            }
-        });
     }
+
 
     /*Responsável por inflar o menu(menu_formulario) na activity.*/
     @Override
@@ -115,7 +126,10 @@ public class Formulario extends AppCompatActivity{
                             startActivity(irParaDisplay);
                             finish();
                             break;
-                        case "display":
+                        case "display_criar":
+                            finish();
+                            break;
+                        case "display_editar":
                             finish();
                             break;
                     }

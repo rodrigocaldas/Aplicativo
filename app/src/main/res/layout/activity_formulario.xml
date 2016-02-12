@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Título"
-            android:inputType="textCapWords"
+            android:inputType="textCapSentences"
             android:imeOptions="actionNext"/>
 
         <EditText
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Saga"
-            android:inputType="textCapWords"
+            android:inputType="textCapSentences"
             android:imeOptions="actionNext"/>
 
         <EditText
@@ -40,14 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Autor"
-            android:inputType="textCapWords"
-            android:imeOptions="actionNext"/>
-
-        <EditText
-            android:id="@+id/formulario_tipo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tipo"
             android:inputType="textCapSentences"
             android:imeOptions="actionNext"/>
 
@@ -102,6 +94,8 @@
             android:hint="Notas Pessoais"
             android:inputType="textMultiLine"
             android:lines="8"/>
+
+
 
     </LinearLayout>
 </ScrollView>
