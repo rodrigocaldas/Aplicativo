@@ -7,19 +7,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import br.com.caldas.rodrigo.aplicativo.dao.LivroDAO;
+import br.com.caldas.rodrigo.aplicativo.modelo.Livro;
+
 public class Inicial extends AppCompatActivity {
+
+    TextView quant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
+        quant = (TextView) findViewById(R.id.inicial_quantidade);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        quant.setText(recuperaQuantidade());
     }
 
     /*Responsável por inflar o menu(menu_inicial) na activity.*/
@@ -58,10 +69,17 @@ public class Inicial extends AppCompatActivity {
             case R.id.inicial_botao_add:
 
                 Intent irParaCadastro = new Intent(this,Formulario.class);
-                irParaCadastro.putExtra("origem","inicial");
+                irParaCadastro.putExtra("origem", "inicial");
                 startActivity(irParaCadastro);
                 break;
         }
+    }
+
+    private String recuperaQuantidade() {
+        LivroDAO dao = new LivroDAO(this);
+        int quantidade = dao.quantidadeCadastrada();
+        dao.close();
+        return String.valueOf(quantidade);
     }
 
 }

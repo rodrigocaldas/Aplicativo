@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +25,8 @@ import br.com.caldas.rodrigo.aplicativo.modelo.Livro;
 public class Display extends AppCompatActivity {
 
     ListView listaLivros;
+    EditText busca;
+    ArrayAdapter<Livro> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +48,37 @@ public class Display extends AppCompatActivity {
         });
         //Registra que o ListView possui um menu de contexto.
         registerForContextMenu(listaLivros);
+
+        //Adiciona um Watcher para o filtro de busca.
+        busca = (EditText) findViewById(R.id.display_busca);
+        busca.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        String ola = acessaSharedPreferences();
-        if (ola.equals("nada")){
+        String preferencia = acessaSharedPreferences();
+        if (preferencia.equals("nada")){
             carregaLista("alfabeto");
         }else{
-            carregaLista(ola);
+            carregaLista(preferencia);
         }
-
+        busca.setText("");
     }
 
     /*Responsável por inflar o menu(menu_display) na activity.*/
@@ -93,7 +117,7 @@ public class Display extends AppCompatActivity {
         List<Livro> alunos = dao.buscaTodosLivros(ordenacao);
         dao.close();
 
-        ArrayAdapter<Livro> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
         listaLivros.setAdapter(adapter);
     }
 

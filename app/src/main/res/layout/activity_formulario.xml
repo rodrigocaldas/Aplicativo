@@ -11,6 +11,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--Apenas para não iniciar a Activity com foco no Título-->
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+
         <EditText
             android:id="@+id/formulario_titulo"
             android:layout_width="match_parent"
@@ -85,7 +92,9 @@
             android:layout_height="wrap_content"
             android:hint="ISBN"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:maxLines="1"
+            android:lines="1"
+            android:imeOptions="actionDone"/>
 
         <EditText
             android:id="@+id/formulario_nota_pessoal"

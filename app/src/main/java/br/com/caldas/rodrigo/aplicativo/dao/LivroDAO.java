@@ -80,6 +80,14 @@ public class LivroDAO extends SQLiteOpenHelper {
         db.delete("Livros", "id = ?", params);
     }
 
+    /*Responsável por retornar a quantidade de livros cadastrados no BD, recebe nada e retorna um int.*/
+    public int quantidadeCadastrada(){
+        String sql = "SELECT * FROM Livros";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql, null);
+        return c.getCount();
+    }
+
     /*Responsável por recuperar no BD todos os exemplares ordenados pelo parametro passado pelo usuário,
     * recebe nada e retorna uma lista de Livros.*/
     public List<Livro> buscaTodosLivros(String parametro) {
