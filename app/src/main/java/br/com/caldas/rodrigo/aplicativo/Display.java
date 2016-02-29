@@ -40,9 +40,8 @@ public class Display extends AppCompatActivity {
                 Livro livro = (Livro) listaLivros.getItemAtPosition(position);
                 Intent irParaFormulario = new Intent(Display.this, Formulario.class);
 
-                //Anexa à Intent um Livro e a origem que serão usados na activity_formulario.
+                //Anexa à Intent um Livro que será usado na activity_formulario.
                 irParaFormulario.putExtra("livro", livro);
-                irParaFormulario.putExtra("origem", "display_editar");
                 startActivity(irParaFormulario);
             }
         });
@@ -106,6 +105,10 @@ public class Display extends AppCompatActivity {
                 salvarSharedPreferences("data_final");
                 carregaLista(acessaSharedPreferences());
                 break;
+            case R.id.display_config:
+                Intent irParaConfig = new Intent(this, Configuracao.class);
+                startActivity(irParaConfig);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -150,7 +153,6 @@ public class Display extends AppCompatActivity {
         switch (view.getId()){
             case R.id.display_botao_add:
                 Intent irParaCadastro = new Intent(this,Formulario.class);
-                irParaCadastro.putExtra("origem", "display_criar");
                 startActivity(irParaCadastro);
                 break;
         }

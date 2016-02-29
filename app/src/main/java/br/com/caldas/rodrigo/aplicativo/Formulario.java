@@ -24,7 +24,6 @@ import br.com.caldas.rodrigo.aplicativo.modelo.Livro;
 public class Formulario extends AppCompatActivity{
 
     private FormularioHelper helper;
-    private String origem;
     private EditText inicial, fim, anotacoes;
     private int dia, mes, ano;
 
@@ -35,21 +34,21 @@ public class Formulario extends AppCompatActivity{
 
         this.helper = new FormularioHelper(this);
 
-        //Resgatando o Livro e a origem passados junto com a Intent.
+        //Resgatando o Livro passado junto com a Intent.
         Intent intent = getIntent();
-        origem = intent.getStringExtra("origem");
         Livro livro = (Livro) intent.getSerializableExtra("livro");
-        //Se foi passado um livro, deve-se preencher o Formulario com os dados do Livro.
-        if(livro != null){
-            helper.preencheFormulario(livro);
-        }
 
         fim = (EditText) findViewById(R.id.formulario_data_fim);
         anotacoes = (EditText) findViewById(R.id.formulario_nota_pessoal);
-        if (!origem.equals("display_editar")){
+
+        //Se não foi passado um livro, desativa os campos de anotações pessoais e data de término.
+        //Se foi passado um livro, preenche o formulário.
+        if(livro == null){
             fim.setVisibility(View.GONE);
             anotacoes.setVisibility(View.GONE);
         }else{
+            helper.preencheFormulario(livro);
+
             fim.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -118,21 +117,7 @@ public class Formulario extends AppCompatActivity{
                     }
                     dao.close();
 
-                    //Verifica qual activity deu início ao activity_formulario para poder encaminhar
-                    //para o activity_display deixando na pilha somente a activity_inicial
-                    switch (origem){
-                        case "inicial":
-                            Intent irParaDisplay = new Intent(this, Display.class);
-                            startActivity(irParaDisplay);
-                            finish();
-                            break;
-                        case "display_criar":
-                            finish();
-                            break;
-                        case "display_editar":
-                            finish();
-                            break;
-                    }
+                    finish();
                 }
                 break;
         }
