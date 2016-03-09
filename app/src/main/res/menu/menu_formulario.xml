@@ -5,8 +5,14 @@
 
     <item
         android:id="@+id/menu_formulario_ok"
-        android:title="OK"
-        android:icon="@drawable/sym_keyboard_ok"
+        android:title="Cadastrar"
+        android:icon="@drawable/check"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_formulario_share"
+        android:title="Compartilhar"
+        android:icon="@drawable/share"
         app:showAsAction="always"/>
 
 </menu>

@@ -4,20 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/display_config"
-        android:title="Configuração"
+        android:id="@+id/display_facebook"
+        android:title="Login"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/display_alfabeto"
-        android:title="Ordem alfabética"
+        android:id="@+id/display_sort"
+        android:title="Ordenação"
+        android:icon="@drawable/sort"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/display_sobre"
+        android:title="Sobre"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/display_inicio"
-        android:title="Data de inicio da leitura"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/display_final"
-        android:title="Data de término da leitura"
+        android:id="@+id/display_ajuda"
+        android:title="Ajuda"
         app:showAsAction="never"/>
 
 </menu>

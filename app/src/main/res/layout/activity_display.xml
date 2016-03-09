@@ -10,7 +10,7 @@
         android:id="@+id/display_busca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_menu_search_holo_light"
+        android:drawableRight="@drawable/search"
         android:hint="Buscar livro"
         android:maxLines="1"
         android:lines="1"
@@ -31,7 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/ic_menu_edit"
+        android:src="@drawable/lapis"
         android:onClick="acao_display" />
 
 </RelativeLayout>

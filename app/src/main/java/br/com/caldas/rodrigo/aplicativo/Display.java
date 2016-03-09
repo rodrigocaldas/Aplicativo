@@ -12,36 +12,47 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import br.com.caldas.rodrigo.aplicativo.dao.LivroDAO;
 import br.com.caldas.rodrigo.aplicativo.modelo.Livro;
 
 public class Display extends AppCompatActivity {
 
-    ListView listaLivros;
-    EditText busca;
-    ArrayAdapter<Livro> adapter;
+    private ListView listaLivros;
+    private EditText busca;
+    private ArrayAdapter<Livro> adapter;
+    private ArrayList<String> sagasList = new ArrayList<>();
+    private String[] sagasArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setIcon(R.drawable.search);
+
         listaLivros = (ListView) findViewById(R.id.lista_livros);
         listaLivros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Livro livro = (Livro) listaLivros.getItemAtPosition(position);
-                Intent irParaFormulario = new Intent(Display.this, Formulario.class);
+
+                sagasArray = sagasList.toArray(new String[sagasList.size()]);
 
                 //Anexa à Intent um Livro que será usado na activity_formulario.
+                Intent irParaFormulario = new Intent(Display.this, Formulario.class);
                 irParaFormulario.putExtra("livro", livro);
+                irParaFormulario.putExtra("autoComplete", sagasArray);
                 startActivity(irParaFormulario);
             }
         });
@@ -71,6 +82,9 @@ public class Display extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         String preferencia = acessaSharedPreferences();
         if (preferencia.equals("nada")){
             carregaLista("alfabeto");
@@ -93,21 +107,29 @@ public class Display extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //Atualiza a preferência de ordenação e atualiza a lista.
         switch (item.getItemId()){
-            case R.id.display_alfabeto:
-                salvarSharedPreferences("alfabeto");
-                carregaLista(acessaSharedPreferences());
+            case R.id.display_facebook:
+
                 break;
-            case R.id.display_inicio:
-                salvarSharedPreferences("data_inicio");
-                carregaLista(acessaSharedPreferences());
+            //ALTERAR -> Abrir um popup com as possibilidades de ordenação
+            case R.id.display_sort:
+                /*case R.id.display_alfabeto:
+                    salvarSharedPreferences("alfabeto");
+                    carregaLista(acessaSharedPreferences());
+                    break;
+                case R.id.display_inicio:
+                    salvarSharedPreferences("data_inicio");
+                    carregaLista(acessaSharedPreferences());
+                    break;
+                case R.id.display_final:
+                    salvarSharedPreferences("data_final");
+                    carregaLista(acessaSharedPreferences());
+                    break;*/
                 break;
-            case R.id.display_final:
-                salvarSharedPreferences("data_final");
-                carregaLista(acessaSharedPreferences());
+            case R.id.display_sobre:
+
                 break;
-            case R.id.display_config:
-                Intent irParaConfig = new Intent(this, Configuracao.class);
-                startActivity(irParaConfig);
+            case R.id.display_ajuda:
+
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -117,10 +139,18 @@ public class Display extends AppCompatActivity {
     * carregar a lista de Livros no ListView.*/
     private void carregaLista(String ordenacao) {
         LivroDAO dao = new LivroDAO(this);
-        List<Livro> alunos = dao.buscaTodosLivros(ordenacao);
+        List<Livro> livros = dao.buscaTodosLivros(ordenacao);
         dao.close();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        String aux;
+        for(Livro l : livros) {
+            aux = l.getSaga();
+            if(!(aux.equals("") || sagasList.contains(aux))){
+                sagasList.add(aux);
+            }
+        }
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, livros);
         listaLivros.setAdapter(adapter);
     }
 
@@ -152,7 +182,8 @@ public class Display extends AppCompatActivity {
     public void acao_display(View view){
         switch (view.getId()){
             case R.id.display_botao_add:
-                Intent irParaCadastro = new Intent(this,Formulario.class);
+                Intent irParaCadastro = new Intent(this, Formulario.class);
+                irParaCadastro.putExtra("autoComplete", sagasArray);
                 startActivity(irParaCadastro);
                 break;
         }

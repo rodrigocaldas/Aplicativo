@@ -27,7 +27,7 @@
             android:inputType="textCapSentences"
             android:imeOptions="actionNext"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/formulario_saga"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Página/tempo atual"
-            android:inputType="number"
+            android:inputType="time"
             android:imeOptions="actionNext"/>
 
         <EditText

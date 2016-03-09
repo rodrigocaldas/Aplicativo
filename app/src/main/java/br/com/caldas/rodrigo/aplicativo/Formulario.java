@@ -1,6 +1,7 @@
 package br.com.caldas.rodrigo.aplicativo;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -26,23 +31,36 @@ public class Formulario extends AppCompatActivity{
     private FormularioHelper helper;
     private EditText inicial, fim, anotacoes;
     private int dia, mes, ano;
+    private AutoCompleteTextView autoComplete;
+    private String[] sagas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setIcon(R.drawable.search);
+
         this.helper = new FormularioHelper(this);
 
         //Resgatando o Livro passado junto com a Intent.
         Intent intent = getIntent();
         Livro livro = (Livro) intent.getSerializableExtra("livro");
+        sagas = intent.getStringArrayExtra("autoComplete");
 
-        fim = (EditText) findViewById(R.id.formulario_data_fim);
-        anotacoes = (EditText) findViewById(R.id.formulario_nota_pessoal);
+        //Setando autocomplete para a saga
+        autoComplete = (AutoCompleteTextView) findViewById(R.id.formulario_saga);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
+                android.R.layout.select_dialog_item, sagas);
+        autoComplete.setThreshold(2);
+        autoComplete.setAdapter(arrayAdapter);
 
         //Se não foi passado um livro, desativa os campos de anotações pessoais e data de término.
         //Se foi passado um livro, preenche o formulário.
+        fim = (EditText) findViewById(R.id.formulario_data_fim);
+        anotacoes = (EditText) findViewById(R.id.formulario_nota_pessoal);
         if(livro == null){
             fim.setVisibility(View.GONE);
             anotacoes.setVisibility(View.GONE);
@@ -117,8 +135,13 @@ public class Formulario extends AppCompatActivity{
                     }
                     dao.close();
 
+                    //((InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                     finish();
                 }
+                break;
+            case R.id.menu_formulario_share:
+                // Implementar o compartilhar junto com o cadastrar
+
                 break;
         }
         return super.onOptionsItemSelected(item);
